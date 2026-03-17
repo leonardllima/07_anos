@@ -18,7 +18,6 @@ background: radial-gradient(circle at top,#0b0b25,#02020a 80%);
 overflow-x:hidden;
 }
 
-/* estrelas */
 .star{
 position:fixed;
 width:2px;
@@ -27,7 +26,6 @@ background:white;
 opacity:.8;
 }
 
-/* container */
 .container{
 position:relative;
 z-index:5;
@@ -36,23 +34,9 @@ max-width:520px;
 margin:auto;
 }
 
-h1{
-font-size:36px;
-margin-bottom:10px;
-}
-
-#contador{
-font-size:18px;
-margin-bottom:25px;
-}
-
-#texto{
-font-size:18px;
-line-height:1.6;
-min-height:140px;
-margin-bottom:25px;
-white-space:pre-line;
-}
+h1{font-size:36px;margin-bottom:10px;}
+#contador{font-size:18px;margin-bottom:25px;}
+#texto{font-size:18px;line-height:1.6;min-height:140px;margin-bottom:25px;white-space:pre-line;}
 
 button{
 background:#ff4d6d;
@@ -66,11 +50,13 @@ margin:10px;
 box-shadow:0 10px 20px rgba(0,0,0,.3);
 }
 
-#polaroidArea{
-margin-top:30px;
+.secondary{
+background:#ffffff22;
+border:1px solid #ffffff33;
 }
 
-/* polaroid */
+#polaroidArea{margin-top:30px;}
+
 .polaroid{
 background:white;
 padding:8px;
@@ -84,16 +70,10 @@ opacity:0;
 animation:fadeIn 1s forwards;
 }
 
-.polaroid img{
-width:100%;
-border-radius:4px;
-}
+.polaroid img{width:100%;border-radius:4px;}
 
-@keyframes fadeIn{
-to{opacity:1}
-}
+@keyframes fadeIn{to{opacity:1}}
 
-/* foto caindo */
 .spacePhoto{
 position:fixed;
 top:-150px;
@@ -108,7 +88,6 @@ animation:fallPhoto 3.5s cubic-bezier(.22,.61,.36,1) forwards;
 100%{transform:translateY(55vh) scale(1) rotate(360deg)}
 }
 
-/* corações */
 .heart{
 position:fixed;
 top:-10vh;
@@ -122,6 +101,30 @@ pointer-events:none;
 @keyframes fall{
 0%{transform:translateY(-10vh)}
 100%{transform:translateY(110vh)}
+}
+
+/* modal surpresa */
+#modal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#000000dd;
+z-index:50;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+padding:30px;
+}
+
+#modal h2{
+margin-bottom:20px;
+}
+
+#modal button{
+background:#ff4d6d;
 }
 
 </style>
@@ -143,6 +146,19 @@ pointer-events:none;
 
 <button id="loveBtn" style="display:none" onclick="explode()">Eu te amo ❤️</button>
 
+<button id="extraBtn" style="display:none" class="secondary" onclick="openModal()">Uma última coisa...</button>
+
+<a href="https://wa.me/5563984167994" target="_blank">
+<button id="whatsBtn" style="display:none" class="secondary">Se der saudade...</button>
+</a>
+
+</div>
+
+<div id="modal">
+<h2>Se chegou até aqui…</h2>
+<p>É porque nossa história continua sendo escrita todos os dias.</p>
+<p>E eu escolheria você de novo em cada um deles. ❤️</p>
+<button onclick="closeModal()">Fechar</button>
 </div>
 
 <audio id="music" loop>
@@ -164,7 +180,6 @@ document.body.appendChild(s)
 const startDate=new Date("2019-03-17")
 
 function updateCounter(){
-
 const now=new Date()
 
 let y=now.getFullYear()-startDate.getFullYear()
@@ -176,7 +191,6 @@ if(m<0){y--;m+=12}
 
 document.getElementById("contador").innerHTML =
 "<b>"+y+" anos, "+m+" meses e "+d+" dias juntos</b>"
-
 }
 
 setInterval(updateCounter,1000)
@@ -201,42 +215,33 @@ Feliz 7 anos de nós. ❤️
 let i=0
 
 function type(){
-
 if(i<text.length){
 document.getElementById("texto").innerHTML+=text.charAt(i)
 i++
 setTimeout(type,35)
 }else{
 document.getElementById("loveBtn").style.display="inline-block"
+document.getElementById("extraBtn").style.display="inline-block"
+document.getElementById("whatsBtn").style.display="inline-block"
 }
-
 }
-
-/* iniciar */
 
 function start(){
-
 document.getElementById("startBtn").style.display="none"
 document.getElementById("music").play()
 type()
-
 launchPhotos()
-
 }
 
 /* corações */
 
 function hearts(){
-
 let h=document.createElement("div")
 h.className="heart"
 h.innerHTML="❤"
 h.style.left=Math.random()*100+"vw"
-
 document.body.appendChild(h)
-
 setTimeout(()=>h.remove(),6000)
-
 }
 
 setInterval(hearts,400)
@@ -310,6 +315,16 @@ setTimeout(()=>h.remove(),900)
 
 }
 
+}
+
+/* modal */
+
+function openModal(){
+document.getElementById("modal").style.display="flex"
+}
+
+function closeModal(){
+document.getElementById("modal").style.display="none"
 }
 
 </script>
