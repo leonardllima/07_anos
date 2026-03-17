@@ -54,7 +54,6 @@ margin-bottom:25px;
 white-space:pre-line;
 }
 
-/* botões */
 button{
 background:#ff4d6d;
 border:none;
@@ -67,12 +66,11 @@ margin:10px;
 box-shadow:0 10px 20px rgba(0,0,0,.3);
 }
 
-/* área polaroid */
 #polaroidArea{
 margin-top:30px;
 }
 
-/* polaroid final */
+/* polaroid */
 .polaroid{
 background:white;
 padding:8px;
@@ -83,7 +81,7 @@ border-radius:6px;
 box-shadow:0 15px 30px rgba(0,0,0,.6);
 transform:rotate(-3deg);
 opacity:0;
-animation:appear 1s ease forwards;
+animation:fadeIn 1s forwards;
 }
 
 .polaroid img{
@@ -91,22 +89,23 @@ width:100%;
 border-radius:4px;
 }
 
-@keyframes appear{
+@keyframes fadeIn{
 to{opacity:1}
 }
 
-/* foto vindo do espaço */
+/* foto caindo */
 .spacePhoto{
 position:fixed;
-top:-200px;
-width:100px;
+top:-150px;
+width:110px;
 z-index:2;
-animation:spaceFall 3.5s ease-out forwards;
+animation:fallPhoto 3.5s cubic-bezier(.22,.61,.36,1) forwards;
 }
 
-@keyframes spaceFall{
-0%{transform:translateY(-200px) scale(.2) rotate(0)}
-100%{transform:translateY(45vh) scale(1) rotate(360deg)}
+@keyframes fallPhoto{
+0%{transform:translateY(-150px) scale(.3) rotate(0)}
+80%{transform:translateY(50vh) scale(1.1) rotate(320deg)}
+100%{transform:translateY(55vh) scale(1) rotate(360deg)}
 }
 
 /* corações */
@@ -183,7 +182,7 @@ document.getElementById("contador").innerHTML =
 setInterval(updateCounter,1000)
 updateCounter()
 
-/* TEXTO */
+/* texto */
 
 const text=`
 Sete anos podem parecer apenas um número.
@@ -202,6 +201,7 @@ Feliz 7 anos de nós. ❤️
 let i=0
 
 function type(){
+
 if(i<text.length){
 document.getElementById("texto").innerHTML+=text.charAt(i)
 i++
@@ -209,31 +209,43 @@ setTimeout(type,35)
 }else{
 document.getElementById("loveBtn").style.display="inline-block"
 }
+
 }
 
+/* iniciar */
+
 function start(){
+
 document.getElementById("startBtn").style.display="none"
 document.getElementById("music").play()
 type()
-startPhotoSequence()
+
+launchPhotos()
+
 }
 
 /* corações */
+
 function hearts(){
+
 let h=document.createElement("div")
 h.className="heart"
 h.innerHTML="❤"
 h.style.left=Math.random()*100+"vw"
+
 document.body.appendChild(h)
+
 setTimeout(()=>h.remove(),6000)
+
 }
+
 setInterval(hearts,400)
 
-/* fotos do espaço apenas uma vez */
+/* fotos caem apenas uma vez */
 
 const photos=["foto1.jpg","foto2.jpg","foto3.jpg"]
 
-function startPhotoSequence(){
+function launchPhotos(){
 
 photos.forEach((src,index)=>{
 
@@ -242,7 +254,7 @@ setTimeout(()=>{
 let img=document.createElement("img")
 img.src=src
 img.className="spacePhoto"
-img.style.left=Math.random()*100+"vw"
+img.style.left=(20+index*30)+"vw"
 
 document.body.appendChild(img)
 
@@ -262,7 +274,7 @@ document.getElementById("polaroidArea").appendChild(pol)
 
 },3500)
 
-},index*2500)
+},index*1800)
 
 })
 
