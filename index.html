@@ -15,11 +15,12 @@ margin:0;
 font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial;
 color:white;
 text-align:center;
-overflow:hidden;
-background:#05050a;
+background:#03030a;
+overflow-x:hidden;
 }
 
-#stars{
+/* GALÁXIA */
+#galaxy{
 position:fixed;
 top:0;
 left:0;
@@ -28,6 +29,7 @@ height:100%;
 z-index:0;
 }
 
+/* CONTAINER */
 .container{
 position:relative;
 z-index:2;
@@ -39,6 +41,7 @@ margin:auto;
 h1{
 font-size:34px;
 margin-bottom:8px;
+letter-spacing:1px;
 }
 
 #contador{
@@ -54,6 +57,7 @@ min-height:150px;
 margin-bottom:25px;
 }
 
+/* BOTÕES */
 button{
 background:linear-gradient(45deg,#ff4d6d,#ff758f);
 border:none;
@@ -68,6 +72,7 @@ max-width:280px;
 margin:10px;
 }
 
+/* GALERIA */
 .galeria{
 display:none;
 margin-top:20px;
@@ -95,12 +100,14 @@ border-radius:4px;
 100%{transform:translateY(0) rotate(-4deg)}
 }
 
+/* CORAÇÕES CAINDO */
 .coracao{
 position:fixed;
 color:#ff4d6d;
-pointer-events:none;
+font-size:20px;
 animation:cair 6s linear infinite;
-z-index:1;
+pointer-events:none;
+z-index:5;
 }
 
 @keyframes cair{
@@ -108,8 +115,25 @@ z-index:1;
 100%{transform:translateY(110vh);opacity:0}
 }
 
-#botaoAmor{
+/* SURPRESA FINAL */
+#surpresa{
 display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#000000dd;
+z-index:10;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+padding:20px;
+}
+
+#surpresa h2{
+font-size:28px;
+margin-bottom:20px;
 }
 
 </style>
@@ -117,7 +141,7 @@ display:none;
 
 <body>
 
-<canvas id="stars"></canvas>
+<canvas id="galaxy"></canvas>
 
 <div class="container">
 
@@ -130,13 +154,23 @@ display:none;
 <button id="botaoStart" onclick="iniciar()">Começar nossa história</button>
 
 <div class="galeria" id="galeria">
+
 <div class="polaroid"><img src="foto1.jpg"></div>
 <div class="polaroid"><img src="foto2.jpg"></div>
 <div class="polaroid"><img src="foto3.jpg"></div>
+
 </div>
 
-<button id="botaoAmor" onclick="explodirAmor()">Eu te amo ❤️</button>
+<button id="botaoAmor" style="display:none" onclick="explodirAmor()">Eu te amo ❤️</button>
 
+<button id="botaoSurpresa" style="display:none" onclick="abrirSurpresa()">Uma última coisa...</button>
+
+</div>
+
+<div id="surpresa">
+<h2>Obrigado por cada momento ❤️</h2>
+<p>Que a nossa história continue por muitos e muitos anos.</p>
+<button onclick="fecharSurpresa()">Fechar</button>
 </div>
 
 <audio id="musica" loop>
@@ -145,44 +179,44 @@ display:none;
 
 <script>
 
-/* estrelas */
+/* GALÁXIA */
 
-const canvas = document.getElementById("stars")
-const ctx = canvas.getContext("2d")
+const canvas=document.getElementById("galaxy")
+const ctx=canvas.getContext("2d")
 
-canvas.width = window.innerWidth
-canvas.height = window.innerHeight
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
 
-let estrelas=[]
+let stars=[]
 
-for(let i=0;i<120;i++){
-estrelas.push({
+for(let i=0;i<200;i++){
+stars.push({
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
 r:Math.random()*1.5
 })
 }
 
-function desenhar(){
-ctx.clearRect(0,0,canvas.width,canvas.height)
+function drawStars(){
 
+ctx.clearRect(0,0,canvas.width,canvas.height)
 ctx.fillStyle="white"
 
-estrelas.forEach(e=>{
+stars.forEach(s=>{
 ctx.beginPath()
-ctx.arc(e.x,e.y,e.r,0,Math.PI*2)
+ctx.arc(s.x,s.y,s.r,0,Math.PI*2)
 ctx.fill()
 })
 
-requestAnimationFrame(desenhar)
+requestAnimationFrame(drawStars)
 }
 
-desenhar()
+drawStars()
 
 
-/* contador */
+/* CONTADOR */
 
-const inicio = new Date("2026-03-17")
+const inicio = new Date("2019-03-17")
 
 function atualizarContador(){
 
@@ -196,7 +230,7 @@ if(dias < 0){meses--;dias += 30}
 if(meses < 0){anos--;meses += 12}
 
 document.getElementById("contador").innerHTML =
-"Desde <b>17/03/2026</b> passaram <b>"+anos+" anos, "+meses+" meses e "+dias+" dias</b>"
+"Desde 17/03/2019 estamos juntos há <b>"+anos+" anos, "+meses+" meses e "+dias+" dias</b>"
 
 }
 
@@ -204,9 +238,9 @@ setInterval(atualizarContador,1000)
 atualizarContador()
 
 
-/* texto */
+/* TEXTO */
 
-const texto = `
+const texto=`
 Sete anos parecem apenas um número…
 
 até lembrar de tudo que cabe dentro dele.
@@ -237,13 +271,14 @@ setTimeout(escrever,35)
 
 document.getElementById("galeria").style.display="block"
 document.getElementById("botaoAmor").style.display="inline-block"
+document.getElementById("botaoSurpresa").style.display="inline-block"
 
 }
 
 }
 
 
-/* iniciar */
+/* INICIAR */
 
 function iniciar(){
 
@@ -256,54 +291,72 @@ escrever()
 }
 
 
-/* corações */
+/* CORAÇÕES CAINDO DESDE O INÍCIO */
 
 function coracoes(){
 
 const c=document.createElement("div")
 
 c.classList.add("coracao")
-
 c.innerHTML="❤"
 
 c.style.left=Math.random()*100+"vw"
-c.style.fontSize=Math.random()*22+12+"px"
+c.style.fontSize=Math.random()*25+15+"px"
 
 document.body.appendChild(c)
 
-setTimeout(()=>{
-c.remove()
-},6000)
+setTimeout(()=>{c.remove()},6000)
 
 }
 
 setInterval(coracoes,350)
 
 
-/* explosão de amor */
+/* EXPLOSÃO DE CORAÇÕES */
 
 function explodirAmor(){
 
-for(let i=0;i<50;i++){
+for(let i=0;i<60;i++){
 
 const c=document.createElement("div")
 
-c.classList.add("coracao")
-
 c.innerHTML="❤"
-
-c.style.left="50vw"
-c.style.top="50vh"
-c.style.fontSize=Math.random()*30+20+"px"
+c.style.position="fixed"
+c.style.left="50%"
+c.style.top="50%"
+c.style.fontSize=Math.random()*40+20+"px"
+c.style.transform="translate(-50%,-50%)"
+c.style.color="#ff4d6d"
+c.style.zIndex=6
 
 document.body.appendChild(c)
 
-setTimeout(()=>{
-c.remove()
-},2000)
+let angle=Math.random()*Math.PI*2
+let distance=Math.random()*300
+
+c.animate([
+{transform:"translate(-50%,-50%)"},
+{transform:`translate(${Math.cos(angle)*distance}px, ${Math.sin(angle)*distance}px)`}
+],{
+duration:1000,
+easing:"ease-out"
+})
+
+setTimeout(()=>c.remove(),1000)
 
 }
 
+}
+
+
+/* SURPRESA FINAL */
+
+function abrirSurpresa(){
+document.getElementById("surpresa").style.display="flex"
+}
+
+function fecharSurpresa(){
+document.getElementById("surpresa").style.display="none"
 }
 
 </script>
