@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nossa História</title>
+<title>7 anos de nós</title>
 
 <style>
 *{box-sizing:border-box}
@@ -18,6 +18,7 @@ background: radial-gradient(circle at top,#0b0b25,#02020a 80%);
 overflow-x:hidden;
 }
 
+/* estrelas */
 .star{
 position:fixed;
 width:2px;
@@ -26,6 +27,7 @@ background:white;
 opacity:.8;
 }
 
+/* container */
 .container{
 position:relative;
 z-index:5;
@@ -52,6 +54,7 @@ margin-bottom:25px;
 white-space:pre-line;
 }
 
+/* botões */
 button{
 background:#ff4d6d;
 border:none;
@@ -64,10 +67,12 @@ margin:10px;
 box-shadow:0 10px 20px rgba(0,0,0,.3);
 }
 
+/* área polaroid */
 #polaroidArea{
-margin-top:20px;
+margin-top:30px;
 }
 
+/* polaroid final */
 .polaroid{
 background:white;
 padding:8px;
@@ -77,6 +82,8 @@ margin:10px;
 border-radius:6px;
 box-shadow:0 15px 30px rgba(0,0,0,.6);
 transform:rotate(-3deg);
+opacity:0;
+animation:appear 1s ease forwards;
 }
 
 .polaroid img{
@@ -84,12 +91,17 @@ width:100%;
 border-radius:4px;
 }
 
+@keyframes appear{
+to{opacity:1}
+}
+
+/* foto vindo do espaço */
 .spacePhoto{
 position:fixed;
 top:-200px;
 width:100px;
 z-index:2;
-animation:spaceFall 5s ease-out forwards;
+animation:spaceFall 3.5s ease-out forwards;
 }
 
 @keyframes spaceFall{
@@ -97,6 +109,7 @@ animation:spaceFall 5s ease-out forwards;
 100%{transform:translateY(45vh) scale(1) rotate(360deg)}
 }
 
+/* corações */
 .heart{
 position:fixed;
 top:-10vh;
@@ -112,27 +125,6 @@ pointer-events:none;
 100%{transform:translateY(110vh)}
 }
 
-.timeline{
-margin-top:40px;
-text-align:left;
-}
-
-.timeline h2{
-text-align:center;
-margin-bottom:20px;
-}
-
-.event{
-background:#ffffff10;
-padding:12px;
-border-radius:10px;
-margin:10px 0;
-}
-
-.event strong{
-display:block;
-margin-bottom:5px;
-}
 </style>
 </head>
 
@@ -151,18 +143,6 @@ margin-bottom:5px;
 <div id="polaroidArea"></div>
 
 <button id="loveBtn" style="display:none" onclick="explode()">Eu te amo ❤️</button>
-
-<div class="timeline" id="timeline" style="display:none">
-
-<h2>Nossa linha do tempo</h2>
-
-<div class="event"><strong>2019</strong>O começo da nossa história.</div>
-<div class="event"><strong>2020</strong>Aprendendo a crescer juntos.</div>
-<div class="event"><strong>2022</strong>Sonhos ficando maiores.</div>
-<div class="event"><strong>2024</strong>Mais memórias, mais planos.</div>
-<div class="event"><strong>Hoje</strong>E a nossa história continua ❤️</div>
-
-</div>
 
 </div>
 
@@ -185,6 +165,7 @@ document.body.appendChild(s)
 const startDate=new Date("2019-03-17")
 
 function updateCounter(){
+
 const now=new Date()
 
 let y=now.getFullYear()-startDate.getFullYear()
@@ -196,12 +177,14 @@ if(m<0){y--;m+=12}
 
 document.getElementById("contador").innerHTML =
 "<b>"+y+" anos, "+m+" meses e "+d+" dias juntos</b>"
+
 }
 
 setInterval(updateCounter,1000)
 updateCounter()
 
-/* texto */
+/* TEXTO */
+
 const text=`
 Sete anos podem parecer apenas um número.
 Mas quando olho para trás, vejo quantas histórias cabem dentro dele.
@@ -225,7 +208,6 @@ i++
 setTimeout(type,35)
 }else{
 document.getElementById("loveBtn").style.display="inline-block"
-document.getElementById("timeline").style.display="block"
 }
 }
 
@@ -233,6 +215,7 @@ function start(){
 document.getElementById("startBtn").style.display="none"
 document.getElementById("music").play()
 type()
+startPhotoSequence()
 }
 
 /* corações */
@@ -246,32 +229,53 @@ setTimeout(()=>h.remove(),6000)
 }
 setInterval(hearts,400)
 
-/* fotos vindo do espaço */
+/* fotos do espaço apenas uma vez */
+
 const photos=["foto1.jpg","foto2.jpg","foto3.jpg"]
 
-function spacePhotos(){
+function startPhotoSequence(){
+
+photos.forEach((src,index)=>{
+
+setTimeout(()=>{
+
 let img=document.createElement("img")
-img.src=photos[Math.floor(Math.random()*photos.length)]
+img.src=src
 img.className="spacePhoto"
 img.style.left=Math.random()*100+"vw"
+
 document.body.appendChild(img)
 
 setTimeout(()=>{
+
 img.remove()
+
 let pol=document.createElement("div")
 pol.className="polaroid"
+
 let pimg=document.createElement("img")
-pimg.src=img.src
+pimg.src=src
+
 pol.appendChild(pimg)
+
 document.getElementById("polaroidArea").appendChild(pol)
-},5000)
+
+},3500)
+
+},index*2500)
+
+})
+
 }
-setInterval(spacePhotos,3000)
 
 /* explosão */
+
 function explode(){
+
 for(let i=0;i<40;i++){
+
 let h=document.createElement("div")
+
 h.innerHTML="❤"
 h.style.position="fixed"
 h.style.left="50%"
@@ -279,6 +283,7 @@ h.style.top="50%"
 h.style.fontSize="30px"
 h.style.color="#ff2e63"
 h.style.zIndex=30
+
 document.body.appendChild(h)
 
 let a=Math.random()*Math.PI*2
@@ -290,7 +295,9 @@ h.animate([
 ],{duration:900})
 
 setTimeout(()=>h.remove(),900)
+
 }
+
 }
 
 </script>
