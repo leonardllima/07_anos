@@ -7,6 +7,7 @@
 <title>7 anos de nós</title>
 
 <style>
+
 *{box-sizing:border-box}
 
 body{
@@ -18,6 +19,7 @@ background: radial-gradient(circle at top,#0b0b25,#02020a 80%);
 overflow-x:hidden;
 }
 
+/* estrelas */
 .star{
 position:fixed;
 width:2px;
@@ -26,6 +28,7 @@ background:white;
 opacity:.8;
 }
 
+/* layout */
 .container{
 position:relative;
 z-index:5;
@@ -38,6 +41,7 @@ h1{font-size:36px;margin-bottom:10px;}
 #contador{font-size:18px;margin-bottom:25px;}
 #texto{font-size:18px;line-height:1.6;min-height:140px;margin-bottom:25px;white-space:pre-line;}
 
+/* botões */
 button{
 background:#ff4d6d;
 border:none;
@@ -55,6 +59,7 @@ background:#ffffff22;
 border:1px solid #ffffff33;
 }
 
+/* polaroids */
 #polaroidArea{margin-top:30px;}
 
 .polaroid{
@@ -74,6 +79,7 @@ animation:fadeIn 1s forwards;
 
 @keyframes fadeIn{to{opacity:1}}
 
+/* queda foto */
 .spacePhoto{
 position:fixed;
 top:-150px;
@@ -88,6 +94,7 @@ animation:fallPhoto 3.5s cubic-bezier(.22,.61,.36,1) forwards;
 100%{transform:translateY(55vh) scale(1) rotate(360deg)}
 }
 
+/* corações */
 .heart{
 position:fixed;
 top:-10vh;
@@ -103,7 +110,7 @@ pointer-events:none;
 100%{transform:translateY(110vh)}
 }
 
-/* modal surpresa */
+/* modal */
 #modal{
 display:none;
 position:fixed;
@@ -119,13 +126,7 @@ flex-direction:column;
 padding:30px;
 }
 
-#modal h2{
-margin-bottom:20px;
-}
-
-#modal button{
-background:#ff4d6d;
-}
+#modal h2{margin-bottom:20px;}
 
 </style>
 </head>
@@ -140,7 +141,7 @@ background:#ff4d6d;
 
 <div id="texto"></div>
 
-<button id="startBtn" onclick="start()">Começar nossa história</button>
+<button id="startBtn" onclick="start()">PRESS START</button>
 
 <div id="polaroidArea"></div>
 
@@ -156,8 +157,8 @@ background:#ff4d6d;
 
 <div id="modal">
 <h2>Se chegou até aqui…</h2>
-<p>É porque nossa história continua sendo escrita todos os dias.</p>
-<p>E eu escolheria você de novo em cada um deles. ❤️</p>
+<p>Nossa história continua sendo escrita todos os dias.</p>
+<p>E eu escolheria você novamente em cada um deles. ❤️</p>
 <button onclick="closeModal()">Fechar</button>
 </div>
 
@@ -180,6 +181,7 @@ document.body.appendChild(s)
 const startDate=new Date("2019-03-17")
 
 function updateCounter(){
+
 const now=new Date()
 
 let y=now.getFullYear()-startDate.getFullYear()
@@ -191,6 +193,7 @@ if(m<0){y--;m+=12}
 
 document.getElementById("contador").innerHTML =
 "<b>"+y+" anos, "+m+" meses e "+d+" dias juntos</b>"
+
 }
 
 setInterval(updateCounter,1000)
@@ -226,6 +229,8 @@ document.getElementById("whatsBtn").style.display="inline-block"
 }
 }
 
+/* iniciar */
+
 function start(){
 document.getElementById("startBtn").style.display="none"
 document.getElementById("music").play()
@@ -246,7 +251,7 @@ setTimeout(()=>h.remove(),6000)
 
 setInterval(hearts,400)
 
-/* fotos caem apenas uma vez */
+/* fotos caem uma vez */
 
 const photos=["foto1.jpg","foto2.jpg","foto3.jpg"]
 
@@ -279,7 +284,7 @@ document.getElementById("polaroidArea").appendChild(pol)
 
 },3500)
 
-},index*1800)
+},index*2000)
 
 })
 
@@ -328,5 +333,6 @@ document.getElementById("modal").style.display="none"
 }
 
 </script>
+
 </body>
 </html>
