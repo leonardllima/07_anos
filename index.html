@@ -19,7 +19,6 @@ overflow:hidden;
 background:#05050a;
 }
 
-/* canvas estrelas */
 #stars{
 position:fixed;
 top:0;
@@ -29,7 +28,6 @@ height:100%;
 z-index:0;
 }
 
-/* container */
 .container{
 position:relative;
 z-index:2;
@@ -38,21 +36,17 @@ max-width:520px;
 margin:auto;
 }
 
-/* titulo */
 h1{
 font-size:34px;
 margin-bottom:8px;
-letter-spacing:1px;
 }
 
-/* contador */
 #contador{
 font-size:16px;
 opacity:.9;
 margin-bottom:20px;
 }
 
-/* texto */
 #texto{
 font-size:18px;
 line-height:1.6;
@@ -60,7 +54,6 @@ min-height:150px;
 margin-bottom:25px;
 }
 
-/* botão principal */
 button{
 background:linear-gradient(45deg,#ff4d6d,#ff758f);
 border:none;
@@ -72,15 +65,14 @@ cursor:pointer;
 box-shadow:0 12px 25px rgba(0,0,0,.5);
 width:85%;
 max-width:280px;
+margin:10px;
 }
 
-/* galeria */
 .galeria{
 display:none;
 margin-top:20px;
 }
 
-/* fotos polaroid */
 .polaroid{
 background:white;
 padding:8px;
@@ -97,14 +89,12 @@ width:100%;
 border-radius:4px;
 }
 
-/* animação flutuar */
 @keyframes flutuar{
 0%{transform:translateY(0) rotate(-4deg)}
 50%{transform:translateY(-12px) rotate(4deg)}
 100%{transform:translateY(0) rotate(-4deg)}
 }
 
-/* corações */
 .coracao{
 position:fixed;
 color:#ff4d6d;
@@ -118,14 +108,8 @@ z-index:1;
 100%{transform:translateY(110vh);opacity:0}
 }
 
-/* botão eu te amo */
 #botaoAmor{
 display:none;
-margin-top:20px;
-font-size:16px;
-background:#ffffff22;
-backdrop-filter:blur(5px);
-border:1px solid #ffffff33;
 }
 
 </style>
@@ -143,17 +127,15 @@ border:1px solid #ffffff33;
 
 <div id="texto"></div>
 
-<button onclick="iniciar()">Começar nossa história</button>
+<button id="botaoStart" onclick="iniciar()">Começar nossa história</button>
 
 <div class="galeria" id="galeria">
-
 <div class="polaroid"><img src="foto1.jpg"></div>
 <div class="polaroid"><img src="foto2.jpg"></div>
 <div class="polaroid"><img src="foto3.jpg"></div>
-
 </div>
 
-<button id="botaoAmor" onclick="explodirAmor()">eu te amo ❤️</button>
+<button id="botaoAmor" onclick="explodirAmor()">Eu te amo ❤️</button>
 
 </div>
 
@@ -163,7 +145,7 @@ border:1px solid #ffffff33;
 
 <script>
 
-/* --------- CÉU ESTRELADO --------- */
+/* estrelas */
 
 const canvas = document.getElementById("stars")
 const ctx = canvas.getContext("2d")
@@ -171,7 +153,7 @@ const ctx = canvas.getContext("2d")
 canvas.width = window.innerWidth
 canvas.height = window.innerHeight
 
-let estrelas = []
+let estrelas=[]
 
 for(let i=0;i<120;i++){
 estrelas.push({
@@ -181,7 +163,7 @@ r:Math.random()*1.5
 })
 }
 
-function desenharEstrelas(){
+function desenhar(){
 ctx.clearRect(0,0,canvas.width,canvas.height)
 
 ctx.fillStyle="white"
@@ -192,15 +174,15 @@ ctx.arc(e.x,e.y,e.r,0,Math.PI*2)
 ctx.fill()
 })
 
-requestAnimationFrame(desenharEstrelas)
+requestAnimationFrame(desenhar)
 }
 
-desenharEstrelas()
+desenhar()
 
 
-/* --------- CONTADOR --------- */
+/* contador */
 
-const inicio = new Date("2019-03-16")
+const inicio = new Date("2026-03-17")
 
 function atualizarContador(){
 
@@ -214,7 +196,7 @@ if(dias < 0){meses--;dias += 30}
 if(meses < 0){anos--;meses += 12}
 
 document.getElementById("contador").innerHTML =
-"Estamos juntos há <b>"+anos+" anos, "+meses+" meses e "+dias+" dias</b>"
+"Desde <b>17/03/2026</b> passaram <b>"+anos+" anos, "+meses+" meses e "+dias+" dias</b>"
 
 }
 
@@ -222,7 +204,7 @@ setInterval(atualizarContador,1000)
 atualizarContador()
 
 
-/* --------- TEXTO --------- */
+/* texto */
 
 const texto = `
 Sete anos parecem apenas um número…
@@ -241,7 +223,7 @@ Algo verdadeiro.
 Feliz 7 anos de nós ❤️
 `
 
-let i = 0
+let i=0
 
 function escrever(){
 
@@ -261,11 +243,11 @@ document.getElementById("botaoAmor").style.display="inline-block"
 }
 
 
-/* --------- INICIAR --------- */
+/* iniciar */
 
 function iniciar(){
 
-document.querySelector("button").style.display="none"
+document.getElementById("botaoStart").style.display="none"
 
 document.getElementById("musica").play()
 
@@ -274,23 +256,23 @@ escrever()
 }
 
 
-/* --------- CORAÇÕES CAINDO --------- */
+/* corações */
 
 function coracoes(){
 
-const coracao = document.createElement("div")
+const c=document.createElement("div")
 
-coracao.classList.add("coracao")
+c.classList.add("coracao")
 
-coracao.innerHTML = "❤"
+c.innerHTML="❤"
 
-coracao.style.left = Math.random()*100+"vw"
-coracao.style.fontSize = Math.random()*22+12+"px"
+c.style.left=Math.random()*100+"vw"
+c.style.fontSize=Math.random()*22+12+"px"
 
-document.body.appendChild(coracao)
+document.body.appendChild(c)
 
 setTimeout(()=>{
-coracao.remove()
+c.remove()
 },6000)
 
 }
@@ -298,13 +280,13 @@ coracao.remove()
 setInterval(coracoes,350)
 
 
-/* --------- EXPLOSÃO DE AMOR --------- */
+/* explosão de amor */
 
 function explodirAmor(){
 
-for(let i=0;i<40;i++){
+for(let i=0;i<50;i++){
 
-const c = document.createElement("div")
+const c=document.createElement("div")
 
 c.classList.add("coracao")
 
