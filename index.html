@@ -1,0 +1,246 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>7 anos de nós</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial, Helvetica, sans-serif;
+color:white;
+text-align:center;
+overflow-x:hidden;
+background: linear-gradient(-45deg,#0f0f0f,#1c1c2e,#3a0f2b,#111);
+background-size:400% 400%;
+animation:gradient 12s ease infinite;
+}
+
+@keyframes gradient{
+0%{background-position:0% 50%}
+50%{background-position:100% 50%}
+100%{background-position:0% 50%}
+}
+
+.container{
+max-width:900px;
+margin:auto;
+padding:40px 20px;
+}
+
+h1{
+font-size:50px;
+margin-bottom:10px;
+}
+
+#contador{
+font-size:20px;
+margin-bottom:30px;
+opacity:.9;
+}
+
+#texto{
+font-size:22px;
+line-height:1.6;
+min-height:200px;
+margin-bottom:40px;
+}
+
+button{
+background:#ff4d6d;
+color:white;
+border:none;
+padding:18px 40px;
+font-size:20px;
+border-radius:30px;
+cursor:pointer;
+transition:.3s;
+}
+
+button:hover{
+transform:scale(1.1);
+}
+
+.slideshow{
+display:none;
+position:relative;
+width:100%;
+max-width:600px;
+margin:auto;
+}
+
+.slide{
+display:none;
+}
+
+.slide img{
+width:100%;
+border-radius:20px;
+box-shadow:0 10px 40px rgba(0,0,0,.6);
+}
+
+.fade{
+animation:fade 2s;
+}
+
+@keyframes fade{
+from{opacity:.4}
+to{opacity:1}
+}
+
+.coracao{
+position:fixed;
+color:#ff4d6d;
+font-size:20px;
+animation:cair 6s linear infinite;
+}
+
+@keyframes cair{
+0%{transform:translateY(-10vh);opacity:1}
+100%{transform:translateY(110vh);opacity:0}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>7 anos de nós</h1>
+<div id="contador"></div>
+
+<div id="texto"></div>
+
+<button onclick="iniciar()">Começar</button>
+
+<div class="slideshow" id="galeria">
+
+<div class="slide fade">
+<img src="foto1.jpg">
+</div>
+
+<div class="slide fade">
+<img src="foto2.jpg">
+</div>
+
+<div class="slide fade">
+<img src="foto3.jpg">
+</div>
+
+</div>
+
+</div>
+
+<audio id="musica" loop>
+<source src="audio.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+const inicio = new Date("2019-03-16")
+
+function atualizarContador(){
+const agora = new Date()
+
+let anos = agora.getFullYear() - inicio.getFullYear()
+let meses = agora.getMonth() - inicio.getMonth()
+let dias = agora.getDate() - inicio.getDate()
+
+if(dias < 0){
+meses--
+dias += 30
+}
+
+if(meses < 0){
+anos--
+meses += 12
+}
+
+document.getElementById("contador").innerHTML =
+"Vivendo essa história há <b>" + anos + " anos, " + meses + " meses e " + dias + " dias</b> ❤️"
+}
+
+setInterval(atualizarContador,1000)
+atualizarContador()
+
+const texto=`
+Sete anos parecem apenas um número…
+até lembrar de tudo que cabe dentro dele.
+
+Momentos simples viraram memória.
+Conversas viraram planos.
+E planos viraram história.
+
+A vida não prometeu facilidade,
+mas nos deu algo muito melhor:
+caminhar lado a lado.
+
+Entre risadas, desafios e sonhos,
+construímos algo raro.
+
+Algo verdadeiro.
+
+E se sete anos contam tanta história,
+imagina tudo que ainda vamos viver.
+
+Feliz 7 anos de nós ❤️
+`
+
+let i=0
+
+function escrever(){
+if(i < texto.length){
+document.getElementById("texto").innerHTML += texto.charAt(i)
+i++
+setTimeout(escrever,40)
+}
+else{
+document.getElementById("galeria").style.display="block"
+mostrarSlides()
+}
+}
+
+function iniciar(){
+document.querySelector("button").style.display="none"
+document.getElementById("musica").play()
+escrever()
+}
+
+let slideIndex=0
+
+function mostrarSlides(){
+let slides=document.getElementsByClassName("slide")
+
+for(let i=0;i<slides.length;i++){
+slides[i].style.display="none"
+}
+
+slideIndex++
+
+if(slideIndex>slides.length){slideIndex=1}
+
+slides[slideIndex-1].style.display="block"
+
+setTimeout(mostrarSlides,4000)
+}
+
+function coracoes(){
+const coracao=document.createElement("div")
+coracao.classList.add("coracao")
+coracao.innerHTML="❤"
+coracao.style.left=Math.random()*100+"vw"
+coracao.style.fontSize=Math.random()*20+10+"px"
+document.body.appendChild(coracao)
+
+setTimeout(()=>{coracao.remove()},6000)
+}
+
+setInterval(coracoes,300)
+
+</script>
+
+</body>
+</html>
