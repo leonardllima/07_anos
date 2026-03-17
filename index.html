@@ -58,22 +58,27 @@ animation:cair 8s linear infinite;opacity:.8;
 </style>
 </head>
 <body>
+
 <div class="container">
 <h1>7 anos de nós ❤️</h1>
 <div id="contador"></div>
 <div id="texto"></div>
 <button onclick="iniciar()">Começar</button>
+
 <div class="galeria" id="galeria">
 <img src="foto1.jpg" class="foto">
 <img src="foto2.jpg" class="foto">
 <img src="foto3.jpg" class="foto">
 </div>
 </div>
+
 <audio id="musica" loop>
 <source src="audio.mp3" type="audio/mpeg">
 </audio>
+
 <script>
 const inicio = new Date("2019-03-16")
+
 function atualizarContador(){
 const agora = new Date()
 let anos = agora.getFullYear() - inicio.getFullYear()
@@ -86,18 +91,25 @@ document.getElementById("contador").innerHTML =
 }
 setInterval(atualizarContador,1000)
 atualizarContador()
+
 const texto = `
 Sete anos parecem apenas um número…
 até lembrar de tudo que cabe dentro dele.
+
 Momentos simples viraram memória.
 Conversas viraram planos.
 E planos viraram história.
+
 Entre risadas, desafios e sonhos,
 construímos algo raro.
+
 Algo verdadeiro.
+
 Feliz 7 anos de nós ❤️
 `
+
 let i = 0
+
 function escrever(){
 if(i < texto.length){
 document.getElementById("texto").innerHTML += texto.charAt(i)
@@ -107,11 +119,13 @@ setTimeout(escrever,40)
 document.getElementById("galeria").style.display="block"
 }
 }
+
 function iniciar(){
 document.querySelector("button").style.display="none"
 document.getElementById("musica").play()
 escrever()
 }
+
 function coracoes(){
 const coracao = document.createElement("div")
 coracao.classList.add("coracao")
@@ -122,6 +136,7 @@ document.body.appendChild(coracao)
 setTimeout(()=>{coracao.remove()},6000)
 }
 setInterval(coracoes,300)
+
 function fotosFlutuando(){
 const fotos = ["foto1.jpg","foto2.jpg","foto3.jpg"]
 const img = document.createElement("img")
@@ -133,5 +148,6 @@ setTimeout(()=>{img.remove()},8000)
 }
 setInterval(fotosFlutuando,2000)
 </script>
+
 </body>
 </html>
