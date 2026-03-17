@@ -15,21 +15,15 @@ color:white;
 text-align:center;
 overflow:hidden;
 
-background: linear-gradient(-45deg,#0f0f0f,#1c1c2e,#3a0f2b,#111);
-background-size:400% 400%;
-animation:fundo 12s ease infinite;
-}
-
-@keyframes fundo{
-0%{background-position:0% 50%}
-50%{background-position:100% 50%}
-100%{background-position:0% 50%}
+background: radial-gradient(circle at top,#1c1c2e,#0f0f0f);
 }
 
 .container{
 padding:30px 20px;
-max-width:500px;
+max-width:520px;
 margin:auto;
+position:relative;
+z-index:2;
 }
 
 h1{
@@ -47,7 +41,7 @@ opacity:.9;
 font-size:18px;
 line-height:1.6;
 min-height:160px;
-margin-bottom:30px;
+margin-bottom:25px;
 }
 
 button{
@@ -60,6 +54,7 @@ border-radius:30px;
 cursor:pointer;
 width:80%;
 max-width:280px;
+box-shadow:0 10px 25px rgba(0,0,0,.5);
 }
 
 .galeria{
@@ -67,21 +62,27 @@ display:none;
 margin-top:20px;
 }
 
-.foto{
+.polaroid{
+background:white;
+padding:8px;
 width:110px;
-height:110px;
-border-radius:50%;
-object-fit:cover;
 margin:10px;
-border:3px solid #ff4d6d;
-box-shadow:0 8px 20px rgba(0,0,0,.6);
-animation:flutuar 4s ease-in-out infinite;
+display:inline-block;
+transform:rotate(-3deg);
+box-shadow:0 10px 25px rgba(0,0,0,.6);
+border-radius:6px;
+animation:flutuar 5s ease-in-out infinite;
+}
+
+.polaroid img{
+width:100%;
+border-radius:4px;
 }
 
 @keyframes flutuar{
-0%{transform:translateY(0)}
-50%{transform:translateY(-8px)}
-100%{transform:translateY(0)}
+0%{transform:translateY(0) rotate(-3deg)}
+50%{transform:translateY(-10px) rotate(3deg)}
+100%{transform:translateY(0) rotate(-3deg)}
 }
 
 .coracao{
@@ -93,6 +94,18 @@ animation:cair 6s linear infinite;
 @keyframes cair{
 0%{transform:translateY(-10vh);opacity:1}
 100%{transform:translateY(110vh);opacity:0}
+}
+
+.estrela{
+position:fixed;
+color:white;
+font-size:10px;
+animation:piscar 2s infinite alternate;
+}
+
+@keyframes piscar{
+from{opacity:.2}
+to{opacity:1}
 }
 
 </style>
@@ -108,13 +121,13 @@ animation:cair 6s linear infinite;
 
 <div id="texto"></div>
 
-<button onclick="iniciar()">Tocar nossa história</button>
+<button onclick="iniciar()">Começar nossa história</button>
 
 <div class="galeria" id="galeria">
 
-<img src="foto1.jpg" class="foto">
-<img src="foto2.jpg" class="foto">
-<img src="foto3.jpg" class="foto">
+<div class="polaroid"><img src="foto1.jpg"></div>
+<div class="polaroid"><img src="foto2.jpg"></div>
+<div class="polaroid"><img src="foto3.jpg"></div>
 
 </div>
 
@@ -157,7 +170,7 @@ Conversas viraram planos.
 E planos viraram nossa história.
 
 Entre risadas, desafios e sonhos,
-fomos construindo algo raro.
+construímos algo raro.
 
 Algo verdadeiro.
 
@@ -204,19 +217,35 @@ coracao.innerHTML = "❤"
 
 coracao.style.left = Math.random()*100+"vw"
 
-coracao.style.fontSize = Math.random()*18+12+"px"
+coracao.style.fontSize = Math.random()*20+12+"px"
 
 document.body.appendChild(coracao)
 
-setTimeout(()=>{
-
-coracao.remove()
-
-},6000)
+setTimeout(()=>{coracao.remove()},6000)
 
 }
 
 setInterval(coracoes,350)
+
+
+function estrelas(){
+
+const estrela = document.createElement("div")
+
+estrela.classList.add("estrela")
+
+estrela.innerHTML = "✦"
+
+estrela.style.left = Math.random()*100+"vw"
+estrela.style.top = Math.random()*100+"vh"
+
+document.body.appendChild(estrela)
+
+setTimeout(()=>{estrela.remove()},2000)
+
+}
+
+setInterval(estrelas,200)
 
 </script>
 
