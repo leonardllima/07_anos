@@ -8,70 +8,88 @@
 
 <style>
 
+*{box-sizing:border-box}
+
 body{
 margin:0;
 font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial;
 color:white;
 text-align:center;
 overflow:hidden;
-
-background: radial-gradient(circle at top,#1c1c2e,#0f0f0f);
+background:#05050a;
 }
 
+/* canvas estrelas */
+#stars{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:0;
+}
+
+/* container */
 .container{
+position:relative;
+z-index:2;
 padding:30px 20px;
 max-width:520px;
 margin:auto;
-position:relative;
-z-index:2;
 }
 
+/* titulo */
 h1{
 font-size:34px;
-margin-bottom:10px;
+margin-bottom:8px;
+letter-spacing:1px;
 }
 
+/* contador */
 #contador{
 font-size:16px;
-margin-bottom:25px;
 opacity:.9;
+margin-bottom:20px;
 }
 
+/* texto */
 #texto{
 font-size:18px;
 line-height:1.6;
-min-height:160px;
+min-height:150px;
 margin-bottom:25px;
 }
 
+/* botão principal */
 button{
-background:#ff4d6d;
-color:white;
+background:linear-gradient(45deg,#ff4d6d,#ff758f);
 border:none;
+color:white;
 padding:16px 30px;
 font-size:18px;
-border-radius:30px;
+border-radius:40px;
 cursor:pointer;
-width:80%;
+box-shadow:0 12px 25px rgba(0,0,0,.5);
+width:85%;
 max-width:280px;
-box-shadow:0 10px 25px rgba(0,0,0,.5);
 }
 
+/* galeria */
 .galeria{
 display:none;
 margin-top:20px;
 }
 
+/* fotos polaroid */
 .polaroid{
 background:white;
 padding:8px;
-width:110px;
-margin:10px;
+width:120px;
 display:inline-block;
-transform:rotate(-3deg);
-box-shadow:0 10px 25px rgba(0,0,0,.6);
+margin:10px;
 border-radius:6px;
-animation:flutuar 5s ease-in-out infinite;
+box-shadow:0 15px 30px rgba(0,0,0,.6);
+animation:flutuar 6s ease-in-out infinite;
 }
 
 .polaroid img{
@@ -79,16 +97,20 @@ width:100%;
 border-radius:4px;
 }
 
+/* animação flutuar */
 @keyframes flutuar{
-0%{transform:translateY(0) rotate(-3deg)}
-50%{transform:translateY(-10px) rotate(3deg)}
-100%{transform:translateY(0) rotate(-3deg)}
+0%{transform:translateY(0) rotate(-4deg)}
+50%{transform:translateY(-12px) rotate(4deg)}
+100%{transform:translateY(0) rotate(-4deg)}
 }
 
+/* corações */
 .coracao{
 position:fixed;
 color:#ff4d6d;
+pointer-events:none;
 animation:cair 6s linear infinite;
+z-index:1;
 }
 
 @keyframes cair{
@@ -96,22 +118,22 @@ animation:cair 6s linear infinite;
 100%{transform:translateY(110vh);opacity:0}
 }
 
-.estrela{
-position:fixed;
-color:white;
-font-size:10px;
-animation:piscar 2s infinite alternate;
-}
-
-@keyframes piscar{
-from{opacity:.2}
-to{opacity:1}
+/* botão eu te amo */
+#botaoAmor{
+display:none;
+margin-top:20px;
+font-size:16px;
+background:#ffffff22;
+backdrop-filter:blur(5px);
+border:1px solid #ffffff33;
 }
 
 </style>
 </head>
 
 <body>
+
+<canvas id="stars"></canvas>
 
 <div class="container">
 
@@ -131,6 +153,8 @@ to{opacity:1}
 
 </div>
 
+<button id="botaoAmor" onclick="explodirAmor()">eu te amo ❤️</button>
+
 </div>
 
 <audio id="musica" loop>
@@ -138,6 +162,43 @@ to{opacity:1}
 </audio>
 
 <script>
+
+/* --------- CÉU ESTRELADO --------- */
+
+const canvas = document.getElementById("stars")
+const ctx = canvas.getContext("2d")
+
+canvas.width = window.innerWidth
+canvas.height = window.innerHeight
+
+let estrelas = []
+
+for(let i=0;i<120;i++){
+estrelas.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*1.5
+})
+}
+
+function desenharEstrelas(){
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+ctx.fillStyle="white"
+
+estrelas.forEach(e=>{
+ctx.beginPath()
+ctx.arc(e.x,e.y,e.r,0,Math.PI*2)
+ctx.fill()
+})
+
+requestAnimationFrame(desenharEstrelas)
+}
+
+desenharEstrelas()
+
+
+/* --------- CONTADOR --------- */
 
 const inicio = new Date("2019-03-16")
 
@@ -153,12 +214,15 @@ if(dias < 0){meses--;dias += 30}
 if(meses < 0){anos--;meses += 12}
 
 document.getElementById("contador").innerHTML =
-"Estamos juntos há <b>"+anos+" anos, "+meses+" meses e "+dias+" dias</b> ❤️"
+"Estamos juntos há <b>"+anos+" anos, "+meses+" meses e "+dias+" dias</b>"
 
 }
 
 setInterval(atualizarContador,1000)
 atualizarContador()
+
+
+/* --------- TEXTO --------- */
 
 const texto = `
 Sete anos parecem apenas um número…
@@ -184,18 +248,20 @@ function escrever(){
 if(i < texto.length){
 
 document.getElementById("texto").innerHTML += texto.charAt(i)
-
 i++
-
 setTimeout(escrever,35)
 
 }else{
 
 document.getElementById("galeria").style.display="block"
+document.getElementById("botaoAmor").style.display="inline-block"
 
 }
 
 }
+
+
+/* --------- INICIAR --------- */
 
 function iniciar(){
 
@@ -207,6 +273,9 @@ escrever()
 
 }
 
+
+/* --------- CORAÇÕES CAINDO --------- */
+
 function coracoes(){
 
 const coracao = document.createElement("div")
@@ -216,36 +285,44 @@ coracao.classList.add("coracao")
 coracao.innerHTML = "❤"
 
 coracao.style.left = Math.random()*100+"vw"
-
-coracao.style.fontSize = Math.random()*20+12+"px"
+coracao.style.fontSize = Math.random()*22+12+"px"
 
 document.body.appendChild(coracao)
 
-setTimeout(()=>{coracao.remove()},6000)
+setTimeout(()=>{
+coracao.remove()
+},6000)
 
 }
 
 setInterval(coracoes,350)
 
 
-function estrelas(){
+/* --------- EXPLOSÃO DE AMOR --------- */
 
-const estrela = document.createElement("div")
+function explodirAmor(){
 
-estrela.classList.add("estrela")
+for(let i=0;i<40;i++){
 
-estrela.innerHTML = "✦"
+const c = document.createElement("div")
 
-estrela.style.left = Math.random()*100+"vw"
-estrela.style.top = Math.random()*100+"vh"
+c.classList.add("coracao")
 
-document.body.appendChild(estrela)
+c.innerHTML="❤"
 
-setTimeout(()=>{estrela.remove()},2000)
+c.style.left="50vw"
+c.style.top="50vh"
+c.style.fontSize=Math.random()*30+20+"px"
+
+document.body.appendChild(c)
+
+setTimeout(()=>{
+c.remove()
+},2000)
 
 }
 
-setInterval(estrelas,200)
+}
 
 </script>
 
