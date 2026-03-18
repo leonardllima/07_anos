@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -7,9 +6,7 @@
 <title>7 anos de nós</title>
 
 <style>
-
-*{box-sizing:border-box}
-
+*{box-sizing:border-box;}
 body{
 margin:0;
 font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial;
@@ -19,7 +16,6 @@ background: radial-gradient(circle at top,#0b0b25,#02020a 80%);
 overflow-x:hidden;
 }
 
-/* estrelas */
 .star{
 position:fixed;
 width:2px;
@@ -28,7 +24,6 @@ background:white;
 opacity:.8;
 }
 
-/* layout */
 .container{
 position:relative;
 z-index:5;
@@ -39,9 +34,15 @@ margin:auto;
 
 h1{font-size:36px;margin-bottom:10px;}
 #contador{font-size:18px;margin-bottom:25px;}
-#texto{font-size:18px;line-height:1.6;min-height:140px;margin-bottom:25px;white-space:pre-line;}
 
-/* botões */
+#texto{
+font-size:18px;
+line-height:1.6;
+min-height:140px;
+margin-bottom:25px;
+white-space:pre-line;
+}
+
 button{
 background:#ff4d6d;
 border:none;
@@ -59,7 +60,6 @@ background:#ffffff22;
 border:1px solid #ffffff33;
 }
 
-/* polaroids */
 #polaroidArea{margin-top:30px;}
 
 .polaroid{
@@ -75,11 +75,13 @@ opacity:0;
 animation:fadeIn 1s forwards;
 }
 
-.polaroid img{width:100%;border-radius:4px;}
+.polaroid img{
+width:100%;
+border-radius:4px;
+}
 
 @keyframes fadeIn{to{opacity:1}}
 
-/* queda foto */
 .spacePhoto{
 position:fixed;
 top:-150px;
@@ -94,7 +96,6 @@ animation:fallPhoto 3.5s cubic-bezier(.22,.61,.36,1) forwards;
 100%{transform:translateY(55vh) scale(1) rotate(360deg)}
 }
 
-/* corações */
 .heart{
 position:fixed;
 top:-10vh;
@@ -110,7 +111,6 @@ pointer-events:none;
 100%{transform:translateY(110vh)}
 }
 
-/* modal */
 #modal{
 display:none;
 position:fixed;
@@ -126,8 +126,36 @@ flex-direction:column;
 padding:30px;
 }
 
-#modal h2{margin-bottom:20px;}
+#jogoAmor{margin-top:50px;}
 
+.areaJogo{
+position:relative;
+height:150px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 20px;
+}
+
+#rapaz,#moca{
+width:90px;
+border-radius:50%;
+box-shadow:0 10px 20px rgba(0,0,0,.4);
+}
+
+#coracao{
+position:absolute;
+left:120px;
+font-size:30px;
+opacity:0;
+transition:all 1s ease;
+}
+
+#resultado{
+margin-top:15px;
+font-size:20px;
+color:#ff4d6d;
+}
 </style>
 </head>
 
@@ -138,7 +166,6 @@ padding:30px;
 <h1>7 anos de nós ❤️</h1>
 
 <div id="contador"></div>
-
 <div id="texto"></div>
 
 <button id="startBtn" onclick="start()">PRESS START</button>
@@ -152,6 +179,19 @@ padding:30px;
 <a href="https://wa.me/5563984167994" target="_blank">
 <button id="whatsBtn" style="display:none" class="secondary">Se der saudade...</button>
 </a>
+
+<div id="jogoAmor">
+<h2>Um joguinho pra nós ❤️</h2>
+
+<div class="areaJogo">
+<img src="foto4.jpg" id="rapaz">
+<div id="coracao">❤️</div>
+<img src="foto5.jpg" id="moca">
+</div>
+
+<button onclick="lancarCoracao()">Jogar coração ❤️</button>
+<div id="resultado"></div>
+</div>
 
 </div>
 
@@ -168,7 +208,6 @@ padding:30px;
 
 <script>
 
-/* estrelas */
 for(let i=0;i<120;i++){
 let s=document.createElement("div")
 s.className="star"
@@ -177,7 +216,6 @@ s.style.top=Math.random()*100+"vh"
 document.body.appendChild(s)
 }
 
-/* contador */
 const startDate=new Date("2019-03-17")
 
 function updateCounter(){
@@ -193,23 +231,24 @@ if(m<0){y--;m+=12}
 
 document.getElementById("contador").innerHTML =
 "<b>"+y+" anos, "+m+" meses e "+d+" dias juntos</b>"
-
 }
 
 setInterval(updateCounter,1000)
 updateCounter()
 
-/* texto */
-
 const text=`
 Sete anos podem parecer apenas um número.
+
 Mas quando olho para trás, vejo quantas histórias cabem dentro dele.
 
 Momentos simples viraram lembranças inesquecíveis.
+
 Conversas viraram planos.
+
 E, sem perceber, os planos viraram a nossa história.
 
 Entre risadas, desafios, conquistas e sonhos compartilhados, fomos construindo algo raro:
+
 um amor leve, verdadeiro e cheio de propósito.
 
 Feliz 7 anos de nós. ❤️
@@ -218,6 +257,7 @@ Feliz 7 anos de nós. ❤️
 let i=0
 
 function type(){
+
 if(i<text.length){
 document.getElementById("texto").innerHTML+=text.charAt(i)
 i++
@@ -229,16 +269,12 @@ document.getElementById("whatsBtn").style.display="inline-block"
 }
 }
 
-/* iniciar */
-
 function start(){
 document.getElementById("startBtn").style.display="none"
 document.getElementById("music").play()
 type()
 launchPhotos()
 }
-
-/* corações */
 
 function hearts(){
 let h=document.createElement("div")
@@ -250,8 +286,6 @@ setTimeout(()=>h.remove(),6000)
 }
 
 setInterval(hearts,400)
-
-/* fotos caem uma vez */
 
 const photos=["foto1.jpg","foto2.jpg","foto3.jpg"]
 
@@ -287,10 +321,7 @@ document.getElementById("polaroidArea").appendChild(pol)
 },index*2000)
 
 })
-
 }
-
-/* explosão */
 
 function explode(){
 
@@ -317,12 +348,8 @@ h.animate([
 ],{duration:900})
 
 setTimeout(()=>h.remove(),900)
-
 }
-
 }
-
-/* modal */
 
 function openModal(){
 document.getElementById("modal").style.display="flex"
@@ -330,6 +357,24 @@ document.getElementById("modal").style.display="flex"
 
 function closeModal(){
 document.getElementById("modal").style.display="none"
+}
+
+function lancarCoracao(){
+
+const coracao=document.getElementById("coracao")
+const resultado=document.getElementById("resultado")
+
+coracao.style.opacity="1"
+coracao.style.left="70%"
+
+setTimeout(()=>{
+
+resultado.innerHTML="💖 Ela recebeu seu coração!"
+
+coracao.style.opacity="0"
+coracao.style.left="120px"
+
+},1000)
 }
 
 </script>
