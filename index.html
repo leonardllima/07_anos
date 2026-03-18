@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>7 anos de nós</title>
+<title>7 anos de nós ❤️</title>
 
 <style>
+
 *{box-sizing:border-box;}
 
 body{
@@ -17,16 +18,31 @@ background: radial-gradient(circle at top,#0b0b25,#02020a 80%);
 overflow-x:hidden;
 }
 
+/* CONTAINER */
+
 .container{
 position:relative;
 z-index:5;
 padding:30px 20px;
-max-width:650px;
+max-width:700px;
 margin:auto;
 }
 
-h1{font-size:36px;margin-bottom:10px;}
-#contador{margin-bottom:20px;font-size:18px;}
+/* TITULO */
+
+h1{
+font-size:36px;
+margin-bottom:10px;
+}
+
+/* CONTADOR */
+
+#contador{
+margin-bottom:20px;
+font-size:18px;
+}
+
+/* TEXTO */
 
 #texto{
 font-size:18px;
@@ -35,6 +51,8 @@ margin-bottom:30px;
 white-space:pre-line;
 min-height:140px;
 }
+
+/* BOTÕES */
 
 button{
 background:#ff4d6d;
@@ -53,6 +71,8 @@ background:#ffffff22;
 border:1px solid #ffffff33;
 }
 
+/* POLAROID */
+
 .polaroid{
 background:white;
 padding:8px;
@@ -69,6 +89,8 @@ width:100%;
 border-radius:4px;
 }
 
+/* FOTO CAINDO */
+
 .spacePhoto{
 position:fixed;
 top:-150px;
@@ -82,18 +104,23 @@ animation:fallPhoto 3s ease-out forwards;
 100%{transform:translateY(45vh) scale(1)}
 }
 
+/* CORAÇÕES */
+
 .heart{
 position:fixed;
 top:-10vh;
 font-size:22px;
 color:#ff2e63;
 animation:fall 6s linear infinite;
+pointer-events:none;
 }
 
 @keyframes fall{
 0%{transform:translateY(-10vh)}
 100%{transform:translateY(110vh)}
 }
+
+/* JOGO */
 
 #jogoAmor{
 margin-top:60px;
@@ -132,6 +159,8 @@ font-size:20px;
 color:#ff4d6d;
 }
 
+/* MODAL */
+
 #modal{
 display:none;
 position:fixed;
@@ -146,6 +175,7 @@ justify-content:center;
 flex-direction:column;
 padding:30px;
 }
+
 </style>
 </head>
 
@@ -174,9 +204,13 @@ padding:30px;
 <h2>Um joguinho pra nós ❤️</h2>
 
 <div class="areaJogo">
+
 <img src="foto4.jpeg" class="avatar">
+
 <div id="coracao">❤️</div>
+
 <img src="foto5.jpeg" class="avatar">
+
 </div>
 
 <button onclick="lancarCoracao()">Jogar coração ❤️</button>
@@ -200,10 +234,14 @@ padding:30px;
 
 <script>
 
+/* CONTADOR */
+
 const startDate=new Date("2019-03-17")
 
 function updateCounter(){
+
 const now=new Date()
+
 let y=now.getFullYear()-startDate.getFullYear()
 let m=now.getMonth()-startDate.getMonth()
 let d=now.getDate()-startDate.getDate()
@@ -213,10 +251,14 @@ if(m<0){y--;m+=12}
 
 document.getElementById("contador").innerHTML =
 "<b>"+y+" anos, "+m+" meses e "+d+" dias juntos</b>"
+
 }
 
 setInterval(updateCounter,1000)
 updateCounter()
+
+
+/* TEXTO */
 
 const text=`
 
@@ -235,27 +277,50 @@ Entre risadas, desafios, conquistas e sonhos compartilhados, fomos construindo a
 um amor leve, verdadeiro e cheio de propósito.
 
 Feliz 7 anos de nós ❤️
+
 `
 
 let i=0
 
 function type(){
+
 if(i<text.length){
+
 document.getElementById("texto").innerHTML += text.charAt(i)
+
 i++
+
 setTimeout(type,35)
+
 }else{
+
 document.getElementById("extraBtn").style.display="inline-block"
 document.getElementById("whatsBtn").style.display="inline-block"
-}
+
 }
 
-function start(){
-document.getElementById("startBtn").style.display="none"
-document.getElementById("music").play()
-type()
-launchPhotos()
 }
+
+/* START */
+
+function start(){
+
+document.getElementById("startBtn").style.display="none"
+
+const music=document.getElementById("music")
+const playPromise=music.play()
+
+if(playPromise!==undefined){
+playPromise.catch(()=>{})
+}
+
+type()
+
+launchPhotos()
+
+}
+
+/* FOTOS CAINDO */
 
 const photos=["foto1.jpg","foto2.jpg","foto3.jpg"]
 
@@ -291,7 +356,10 @@ document.getElementById("polaroidArea").appendChild(pol)
 },index*1800)
 
 })
+
 }
+
+/* CORAÇÕES */
 
 function hearts(){
 
@@ -308,6 +376,8 @@ setTimeout(()=>h.remove(),6000)
 
 setInterval(hearts,500)
 
+/* MODAL */
+
 function openModal(){
 document.getElementById("modal").style.display="flex"
 }
@@ -315,6 +385,8 @@ document.getElementById("modal").style.display="flex"
 function closeModal(){
 document.getElementById("modal").style.display="none"
 }
+
+/* JOGO */
 
 function lancarCoracao(){
 
@@ -332,6 +404,7 @@ coracao.style.opacity="0"
 coracao.style.left="140px"
 
 },1000)
+
 }
 
 </script>
