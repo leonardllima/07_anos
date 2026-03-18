@@ -36,8 +36,6 @@ white-space:pre-line;
 min-height:140px;
 }
 
-/* BOTÕES */
-
 button{
 background:#ff4d6d;
 border:none;
@@ -55,8 +53,6 @@ background:#ffffff22;
 border:1px solid #ffffff33;
 }
 
-/* POLAROID */
-
 .polaroid{
 background:white;
 padding:8px;
@@ -66,20 +62,12 @@ margin:10px;
 border-radius:6px;
 box-shadow:0 15px 30px rgba(0,0,0,.6);
 transform:rotate(-3deg);
-opacity:0;
-animation:fadeIn 1s forwards;
 }
 
 .polaroid img{
 width:100%;
 border-radius:4px;
 }
-
-@keyframes fadeIn{
-to{opacity:1}
-}
-
-/* FOTO CAINDO */
 
 .spacePhoto{
 position:fixed;
@@ -94,8 +82,6 @@ animation:fallPhoto 3s ease-out forwards;
 100%{transform:translateY(45vh) scale(1)}
 }
 
-/* CORAÇÕES */
-
 .heart{
 position:fixed;
 top:-10vh;
@@ -108,8 +94,6 @@ animation:fall 6s linear infinite;
 0%{transform:translateY(-10vh)}
 100%{transform:translateY(110vh)}
 }
-
-/* JOGO */
 
 #jogoAmor{
 margin-top:60px;
@@ -148,8 +132,6 @@ font-size:20px;
 color:#ff4d6d;
 }
 
-/* MODAL */
-
 #modal{
 display:none;
 position:fixed;
@@ -187,20 +169,14 @@ padding:30px;
 <button id="whatsBtn" style="display:none" class="secondary">Se der saudade...</button>
 </a>
 
-<!-- JOGO -->
-
 <div id="jogoAmor">
 
 <h2>Um joguinho pra nós ❤️</h2>
 
 <div class="areaJogo">
-
 <img src="foto4.jpeg" class="avatar">
-
 <div id="coracao">❤️</div>
-
 <img src="foto5.jpeg" class="avatar">
-
 </div>
 
 <button onclick="lancarCoracao()">Jogar coração ❤️</button>
@@ -212,27 +188,22 @@ padding:30px;
 </div>
 
 <div id="modal">
-
 <h2>Se chegou até aqui…</h2>
-
 <p>Nossa história continua sendo escrita todos os dias.</p>
-
 <p>E eu escolheria você novamente em cada um deles ❤️</p>
-
 <button onclick="closeModal()">Fechar</button>
-
 </div>
 
-<script>
+<audio id="music" loop>
+<source src="audio.mp3" type="audio/mpeg">
+</audio>
 
-/* CONTADOR */
+<script>
 
 const startDate=new Date("2019-03-17")
 
 function updateCounter(){
-
 const now=new Date()
-
 let y=now.getFullYear()-startDate.getFullYear()
 let m=now.getMonth()-startDate.getMonth()
 let d=now.getDate()-startDate.getDate()
@@ -242,14 +213,10 @@ if(m<0){y--;m+=12}
 
 document.getElementById("contador").innerHTML =
 "<b>"+y+" anos, "+m+" meses e "+d+" dias juntos</b>"
-
 }
 
 setInterval(updateCounter,1000)
 updateCounter()
-
-
-/* TEXTO */
 
 const text=`
 
@@ -273,35 +240,22 @@ Feliz 7 anos de nós ❤️
 let i=0
 
 function type(){
-
 if(i<text.length){
-
 document.getElementById("texto").innerHTML += text.charAt(i)
-
 i++
-
 setTimeout(type,35)
-
 }else{
-
 document.getElementById("extraBtn").style.display="inline-block"
 document.getElementById("whatsBtn").style.display="inline-block"
-
 }
-
 }
 
 function start(){
-
 document.getElementById("startBtn").style.display="none"
-
+document.getElementById("music").play()
 type()
-
 launchPhotos()
-
 }
-
-/* FOTOS CAINDO */
 
 const photos=["foto1.jpg","foto2.jpg","foto3.jpg"]
 
@@ -337,19 +291,13 @@ document.getElementById("polaroidArea").appendChild(pol)
 },index*1800)
 
 })
-
 }
-
-/* CORAÇÕES */
 
 function hearts(){
 
 let h=document.createElement("div")
-
 h.className="heart"
-
 h.innerHTML="❤"
-
 h.style.left=Math.random()*100+"vw"
 
 document.body.appendChild(h)
@@ -360,9 +308,6 @@ setTimeout(()=>h.remove(),6000)
 
 setInterval(hearts,500)
 
-
-/* MODAL */
-
 function openModal(){
 document.getElementById("modal").style.display="flex"
 }
@@ -370,8 +315,6 @@ document.getElementById("modal").style.display="flex"
 function closeModal(){
 document.getElementById("modal").style.display="none"
 }
-
-/* JOGO */
 
 function lancarCoracao(){
 
@@ -389,7 +332,6 @@ coracao.style.opacity="0"
 coracao.style.left="140px"
 
 },1000)
-
 }
 
 </script>
