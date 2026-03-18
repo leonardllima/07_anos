@@ -6,7 +6,9 @@
 <title>7 anos de nós</title>
 
 <style>
+
 *{box-sizing:border-box;}
+
 body{
 margin:0;
 font-family:Arial, Helvetica, sans-serif;
@@ -24,7 +26,22 @@ max-width:600px;
 margin:auto;
 }
 
-h1{font-size:36px;margin-bottom:10px;}
+h1{
+font-size:36px;
+margin-bottom:10px;
+}
+
+#contador{
+margin-bottom:20px;
+font-size:18px;
+}
+
+#texto{
+font-size:18px;
+line-height:1.6;
+margin-bottom:30px;
+white-space:pre-line;
+}
 
 button{
 background:#ff4d6d;
@@ -36,6 +53,34 @@ border-radius:40px;
 cursor:pointer;
 margin:10px;
 box-shadow:0 10px 20px rgba(0,0,0,.3);
+}
+
+.polaroid{
+background:white;
+padding:8px;
+width:120px;
+display:inline-block;
+margin:10px;
+border-radius:6px;
+box-shadow:0 15px 30px rgba(0,0,0,.6);
+}
+
+.polaroid img{
+width:100%;
+border-radius:4px;
+}
+
+.heart{
+position:fixed;
+top:-10vh;
+font-size:22px;
+color:#ff2e63;
+animation:fall 6s linear infinite;
+}
+
+@keyframes fall{
+0%{transform:translateY(-10vh)}
+100%{transform:translateY(110vh)}
 }
 
 #jogoAmor{
@@ -74,6 +119,7 @@ margin-top:20px;
 font-size:20px;
 color:#ff4d6d;
 }
+
 </style>
 </head>
 
@@ -83,17 +129,25 @@ color:#ff4d6d;
 
 <h1>7 anos de nós ❤️</h1>
 
+<div id="contador"></div>
+
+<div id="texto"></div>
+
+<button id="startBtn" onclick="start()">PRESS START</button>
+
+<div id="polaroidArea"></div>
+
 <div id="jogoAmor">
 
 <h2>Um joguinho pra nós ❤️</h2>
 
 <div class="areaJogo">
 
-<img src="foto4.jpeg" class="avatar" id="rapaz">
+<img src="foto4.jpeg" class="avatar">
 
 <div id="coracao">❤️</div>
 
-<img src="foto5.jpeg" class="avatar" id="moca">
+<img src="foto5.jpeg" class="avatar">
 
 </div>
 
@@ -107,12 +161,122 @@ color:#ff4d6d;
 
 <script>
 
+const startDate=new Date("2019-03-17")
+
+function updateCounter(){
+
+const now=new Date()
+
+let y=now.getFullYear()-startDate.getFullYear()
+let m=now.getMonth()-startDate.getMonth()
+let d=now.getDate()-startDate.getDate()
+
+if(d<0){m--;d+=30}
+if(m<0){y--;m+=12}
+
+document.getElementById("contador").innerHTML=
+"<b>"+y+" anos, "+m+" meses e "+d+" dias juntos</b>"
+
+}
+
+setInterval(updateCounter,1000)
+updateCounter()
+
+
+const text=`
+
+Sete anos podem parecer apenas um número.
+
+Mas quando olho para trás, vejo quantas histórias cabem dentro dele.
+
+Momentos simples viraram lembranças inesquecíveis.
+
+Conversas viraram planos.
+
+E, sem perceber, os planos viraram a nossa história.
+
+Entre risadas, desafios, conquistas e sonhos compartilhados, fomos construindo algo raro:
+
+um amor leve, verdadeiro e cheio de propósito.
+
+Feliz 7 anos de nós ❤️
+
+`
+
+let i=0
+
+function type(){
+
+if(i<text.length){
+
+document.getElementById("texto").innerHTML+=text.charAt(i)
+
+i++
+
+setTimeout(type,35)
+
+}
+
+}
+
+function start(){
+
+document.getElementById("startBtn").style.display="none"
+
+type()
+
+launchPhotos()
+
+}
+
+const photos=["foto1.jpg","foto2.jpg","foto3.jpg"]
+
+function launchPhotos(){
+
+photos.forEach(src=>{
+
+let pol=document.createElement("div")
+
+pol.className="polaroid"
+
+let img=document.createElement("img")
+
+img.src=src
+
+pol.appendChild(img)
+
+document.getElementById("polaroidArea").appendChild(pol)
+
+})
+
+}
+
+function hearts(){
+
+let h=document.createElement("div")
+
+h.className="heart"
+
+h.innerHTML="❤"
+
+h.style.left=Math.random()*100+"vw"
+
+document.body.appendChild(h)
+
+setTimeout(()=>h.remove(),6000)
+
+}
+
+setInterval(hearts,500)
+
 function lancarCoracao(){
 
 const coracao=document.getElementById("coracao")
+
 const resultado=document.getElementById("resultado")
 
 coracao.style.opacity="1"
+
 coracao.style.left="70%"
 
 setTimeout(()=>{
@@ -120,6 +284,7 @@ setTimeout(()=>{
 resultado.innerHTML="💖 Ela recebeu seu coração!"
 
 coracao.style.opacity="0"
+
 coracao.style.left="140px"
 
 },1000)
