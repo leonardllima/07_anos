@@ -6,9 +6,7 @@
 <title>7 anos de nós</title>
 
 <style>
-
 *{box-sizing:border-box;}
-
 body{
 margin:0;
 font-family:Arial, Helvetica, sans-serif;
@@ -53,24 +51,20 @@ justify-content:space-between;
 padding:0 40px;
 }
 
-/* AVATARES CIRCULARES */
-
 .avatar{
-width:100px;
-height:100px;
+width:110px;
+height:110px;
 border-radius:50%;
 object-fit:cover;
 border:3px solid white;
 box-shadow:0 10px 20px rgba(0,0,0,.4);
 }
 
-/* CORAÇÃO ANIMADO */
-
 #coracao{
 position:absolute;
-left:120px;
+left:140px;
 top:60px;
-font-size:32px;
+font-size:36px;
 opacity:0;
 transition:all 1s ease;
 }
@@ -80,7 +74,6 @@ margin-top:20px;
 font-size:20px;
 color:#ff4d6d;
 }
-
 </style>
 </head>
 
@@ -96,11 +89,11 @@ color:#ff4d6d;
 
 <div class="areaJogo">
 
-<img src="foto4.jpg" class="avatar" id="rapaz">
+<img src="foto4.jpeg" class="avatar" id="rapaz">
 
 <div id="coracao">❤️</div>
 
-<img src="foto5.jpg" class="avatar" id="moca">
+<img src="foto5.jpeg" class="avatar" id="moca">
 
 </div>
 
@@ -127,7 +120,7 @@ setTimeout(()=>{
 resultado.innerHTML="💖 Ela recebeu seu coração!"
 
 coracao.style.opacity="0"
-coracao.style.left="120px"
+coracao.style.left="140px"
 
 },1000)
 
